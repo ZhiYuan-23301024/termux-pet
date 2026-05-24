@@ -46,8 +46,7 @@ install_pet() {
                 echo "[custom.petshow]" >> "$HOME/.config/starship.toml"
                 echo 'command = "~/.termux-pet/pet_prompt.sh"' >> "$HOME/.config/starship.toml"
                 echo 'when = "test -f ~/.termux-pet/pet_state.sh"' >> "$HOME/.config/starship.toml"
-                echo 'format = "[ $output ]"' >> "$HOME/.config/starship.toml"
-                echo 'style = "bold green"' >> "$HOME/.config/starship.toml"
+                echo 'format = "[$output]($style)"' >> "$HOME/.config/starship.toml"
             fi
         else
             cp "$PET_DIR/starship_pet.toml" "$HOME/.config/starship.toml"

@@ -18,11 +18,8 @@ if [ -f "$HOME/.config/starship.toml" ]; then
     sed -i '/\[custom.petshow\]/d' "$HOME/.config/starship.toml"
     sed -i '/command = "~\/.termux-pet\/pet_prompt.sh"/d' "$HOME/.config/starship.toml"
     sed -i '/when = "test -f ~\/.termux-pet\/pet_state.sh"/d' "$HOME/.config/starship.toml"
-    sed -i '/format = "\[ \$output \]"/d' "$HOME/.config/starship.toml"
-    sed -i '/style = "bold green"/d' "$HOME/.config/starship.toml"
+    sed -i '/format = "\[\$output\](\$style)"/d' "$HOME/.config/starship.toml"
 fi
-
-rm -rf "$TARGET_DIR"
 
 echo ""
 echo "卸载完成！"
