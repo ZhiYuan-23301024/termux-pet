@@ -201,22 +201,28 @@ pet_dialogue() {
     echo -e "${CYAN}${dialogue}${NC}"
 }
 
-case "$1" in
-    show) pet_show ;;
-    hide) pet_hide ;;
-    toggle) pet_toggle ;;
-    status) pet_status ;;
-    mood) pet_mood "$2" ;;
-    dialogue) pet_dialogue ;;
-    state) read_state ;;
-    art) get_pet_art "$(get_mood)" ;;
-    *)
-        echo "Pets命令用法:"
-        echo "  pets show     - 显示宠物"
-        echo "  pets hide     - 隐藏宠物"
-        echo "  pets toggle   - 切换显示状态"
-        echo "  pets status   - 查看状态"
-        echo "  pets mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)"
-        echo "  pets dialogue - 随机对话"
-        ;;
-esac
+pets() {
+    case "$1" in
+        show) pet_show ;;
+        hide) pet_hide ;;
+        toggle) pet_toggle ;;
+        status) pet_status ;;
+        mood) pet_mood "$2" ;;
+        dialogue) pet_dialogue ;;
+        state) read_state ;;
+        art) get_pet_art "$(get_mood)" ;;
+        *)
+            echo "Pets命令用法:"
+            echo "  pets show     - 显示宠物"
+            echo "  pets hide     - 隐藏宠物"
+            echo "  pets toggle   - 切换显示状态"
+            echo "  pets status   - 查看状态"
+            echo "  pets mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)"
+            echo "  pets dialogue - 随机对话"
+            ;;
+    esac
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    pets "$@"
+fi
