@@ -1,0 +1,10 @@
+# Starship 集成示例配置
+# 将此内容添加到你的 ~/.config/starship.toml 文件中
+
+# 自定义宠物模块
+[custom.pet]
+description = "终端宠物"
+command = "source ~/.termux-pet/pet.sh && starship_pet"
+when = true
+format = "$output\n"
+style = "bold green"

@@ -1,17 +1,25 @@
 ========================================
-      Termux Pet 终端宠物交互系统
-              使用说明
+      Termux Pet 终端宠物 (Starship版)
 ========================================
 
 一、项目简介
 -----------
-Termux Pet 是一个基于 Termux 环境的终端宠物交互系统，具有以下特点：
-- 字符画宠物显示（cowsay风格）
-- 随机对话系统
-- 好感度进度条
-- 支持 bash/zsh 终端环境
+Termux Pet 是一个基于 Starship 的终端宠物系统，具有以下特点：
+- 使用 Starship 提示符显示宠物（单行字符画表情包+对话）
+- 不再使用子shell渲染，不影响终端操作
+- 宠物显示在提示符左侧，不遮挡命令输入
+- 心情系统，表情和对话根据命令执行结果变化
 
-二、安装方法
+二、安装前提
+-----------
+1. 已安装 Starship
+   curl -sS https://starship.rs/install.sh | sh
+
+2. 确保 shell 配置文件中有 Starship 初始化
+   eval "$(starship init bash)"  # bash
+   eval "$(starship init zsh)"   # zsh
+
+三、安装方法
 -----------
 1. 将项目文件复制到 Termux 中
 2. 进入项目目录：
@@ -21,60 +29,99 @@ Termux Pet 是一个基于 Termux 环境的终端宠物交互系统，具有以�
 4. 重启终端或执行：
    source ~/.bashrc
 
-三、基本命令
+四、基本命令
 -----------
-petshow        - 显示宠物和好感度
-pethide        - 隐藏宠物
-pettoggle      - 切换显示状态
-petstatus      - 查看当前状态
-petlove        - 手动增加好感度
-petreset       - 重置好感度为0
+pet show     - 显示宠物
+pet hide     - 隐藏宠物
+pet toggle   - 切换显示状态
+pet status   - 查看当前状态
+pet mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)
+pet dialogue - 随机对话
 
-四、好感度系统
+五、心情系统
 -------------
-- 初始值：0
-- 上限值：100
-- 每次命令执行后自动+1
-- 达到上限后不再增加
-- 使用 'petlove' 可手动增加
+心情根据上一条命令的执行结果自动决定：
 
-五、配置自定义
+**命令成功执行 (exit code = 0):**
+- 70% 概率：happy (开心)
+- 20% 概率：normal (普通)
+- 10% 概率：working (工作)
+
+**命令执行失败 (exit code != 0):**
+- 60% 概率：sad (难过)
+- 20% 概率：normal (普通)
+- 20% 概率：sleeping (睡觉)
+
+六、表情+对话系统
+-----------------
+每次执行命令后，提示符左侧显示宠物表情和对话：
+
+示例效果：
+```
+[ (^▽^) 干得漂亮！ ] user@host ~/path $
+[ (´・ω・`) 别灰心哦... ] user@host ~/path $
+[ (-ω-)zzZ ...zzz ] user@host ~/path $
+```
+
+对话根据当前心情从语料库中随机选取。
+
+七、表情包系统
+-------------
+表情包存储在 pet_arts.txt，支持6种心情：
+- normal   : 普通表情
+- happy    : 开心表情
+- sad      : 难过表情
+- sleeping : 睡觉表情
+- eating   : 吃东西表情
+- working  : 工作表情
+
+每种心情可配置多个表情，随机选取显示。
+
+八、对话语料库
+-------------
+对话存储在 dialogues.txt，格式：
+```
+[mood=happy]干得漂亮！
+[mood=happy]太棒了！
+[mood=sad]别灰心，再试试
+...
+```
+
+支持6种心情的对话，可自行添加修改。
+
+九、配置自定义
 -------------
 配置文件位置：~/.termux-pet/pet.conf
+
 可修改项：
-- SHOW_COMMAND: 显示命令（默认: petshow）
-- HIDE_COMMAND: 隐藏命令（默认: pethide）
-- PET_NAME: 宠物名称（默认: 小宠物）
-- FAVORITE_MAX: 好感度上限（默认: 100）
-- FAVORITE_INCREMENT: 每次增加量（默认: 1）
+- PET_NAME: 宠物名称
 
-六、对话内容自定义
------------------
-对话文件位置：~/.termux-pet/dialogues.txt
-每行一条对话，自动随机选取显示
-可自行添加或修改对话内容
+十、Starship 配置
+----------------
+宠物模块配置位置：~/.config/starship.toml
 
-七、卸载方法
------------
+[custom.petshow] 模块控制宠物显示：
+- command: 执行的脚本路径
+- when: 显示条件
+- format: 显示格式
+- style: 样式（颜色等）
+
+十一、文件结构
+--------------
+termux-pet/
+├── pet_state.sh      # 核心状态管理
+├── pet_prompt.sh     # Starship调用脚本
+├── pet_arts.txt      # 单行表情包库
+├── dialogues.txt     # 对话语料库
+├── pet.conf          # 配置文件
+├── starship_pet.toml # Starship模块配置
+├── install.sh        # 安装脚本
+└── uninstall.sh     # 卸载脚本
+
+十二、卸载方法
+-------------
 执行卸载脚本：
 bash uninstall.sh
-
-八、文件结构
------------
-termux-pet/
-├── pet.sh          # 主脚本
-├── pet.conf        # 配置文件
-├── dialogues.txt   # 对话文本库
-├── install.sh      # 安装脚本
-├── uninstall.sh    # 卸载脚本
-└── 使用说明.txt     # 本说明文件
-
-九、注意事项
------------
-1. 建议在 Termux 环境中使用
-2. 支持 bash 和 zsh 终端
-3. 宠物显示不会遮挡命令输入区域
-4. 好感度数据自动保存，重启终端后保留
 
 ========================================
             使用愉快！

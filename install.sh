@@ -1,76 +1,110 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Termux Pet 安装脚本
-
-# 获取脚本所在目录
 PET_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-
-# 目标安装目录
 TARGET_DIR="$HOME/.termux-pet"
 
-# 安装函数
 install_pet() {
-    echo "开始安装 Termux Pet..."
-    
-    # 创建目标目录
+    echo "开始安装 Termux Pet (Starship版)..."
+
     mkdir -p "$TARGET_DIR"
-    
-    # 复制文件
-    cp "$PET_DIR/pet.sh" "$TARGET_DIR/"
+
+    cp "$PET_DIR/pet_state.sh" "$TARGET_DIR/"
+    cp "$PET_DIR/pet_prompt.sh" "$TARGET_DIR/"
+    cp "$PET_DIR/pet_arts.txt" "$TARGET_DIR/"
     cp "$PET_DIR/pet.conf" "$TARGET_DIR/"
     cp "$PET_DIR/dialogues.txt" "$TARGET_DIR/"
-    
-    # 设置执行权限
-    chmod +x "$TARGET_DIR/pet.sh"
-    
-    # 更新配置文件中的路径
+
+    chmod +x "$TARGET_DIR/pet_state.sh"
+    chmod +x "$TARGET_DIR/pet_prompt.sh"
+
     sed -i "s|PET_DIR=.*|PET_DIR=\"$TARGET_DIR\"|" "$TARGET_DIR/pet.conf"
-    
-    # 设置环境变量
-    echo "export PET_DIR=\"$TARGET_DIR\"" >> "$HOME/.bashrc"
-    echo "source \"$TARGET_DIR/pet.sh\" init" >> "$HOME/.bashrc"
-    
-    # 为 zsh 用户设置
-    if [ -f "$HOME/.zshrc" ]; then
-        echo "export PET_DIR=\"$TARGET_DIR\"" >> "$HOME/.zshrc"
-        echo "source \"$TARGET_DIR/pet.sh\" init" >> "$HOME/.zshrc"
+
+    PET_CONFIG_LINE="export PET_DIR=\"$TARGET_DIR\""
+    ALIAS_LINE="source \"$TARGET_DIR/pet_state.sh\""
+
+    if ! grep -q "$PET_CONFIG_LINE" "$HOME/.bashrc" 2>/dev/null; then
+        echo "$PET_CONFIG_LINE" >> "$HOME/.bashrc"
     fi
-    
+    if ! grep -q "$ALIAS_LINE" "$HOME/.bashrc" 2>/dev/null; then
+        echo "$ALIAS_LINE" >> "$HOME/.bashrc"
+    fi
+
+    if [ -f "$HOME/.zshrc" ]; then
+        if ! grep -q "$PET_CONFIG_LINE" "$HOME/.zshrc" 2>/dev/null; then
+            echo "$PET_CONFIG_LINE" >> "$HOME/.zshrc"
+        fi
+        if ! grep -q "$ALIAS_LINE" "$HOME/.zshrc" 2>/dev/null; then
+            echo "$ALIAS_LINE" >> "$HOME/.zshrc"
+        fi
+    fi
+
+    mkdir -p "$HOME/.config"
+    if [ -d "$HOME/.config/starship" ]; then
+        if [ -f "$HOME/.config/starship.toml" ]; then
+            if ! grep -q "\[custom.petshow\]" "$HOME/.config/starship.toml" 2>/dev/null; then
+                echo "" >> "$HOME/.config/starship.toml"
+                echo "[custom.petshow]" >> "$HOME/.config/starship.toml"
+                echo 'command = "~/.termux-pet/pet_prompt.sh"' >> "$HOME/.config/starship.toml"
+                echo 'when = "test -f ~/.termux-pet/pet_state.sh"' >> "$HOME/.config/starship.toml"
+                echo 'format = "[ $output ]"' >> "$HOME/.config/starship.toml"
+                echo 'style = "bold green"' >> "$HOME/.config/starship.toml"
+            fi
+        else
+            cp "$PET_DIR/starship_pet.toml" "$HOME/.config/starship.toml"
+        fi
+    else
+        mkdir -p "$HOME/.config/starship"
+        cp "$PET_DIR/starship_pet.toml" "$HOME/.config/starship.toml"
+    fi
+
     echo ""
     echo "安装完成！"
     echo ""
-    echo "使用方法:"
-    echo "  重启终端或执行: source ~/.bashrc"
-    echo "  使用 'petshow' 显示宠物"
-    echo "  使用 'pethide' 隐藏宠物"
+    echo "下一步操作:"
+    echo "1. 安装 Starship (如果没有安装):"
+    echo "   curl -sS https://starship.rs/install.sh | sh"
     echo ""
-    echo "配置文件位置: $TARGET_DIR/pet.conf"
-    echo "对话文件位置: $TARGET_DIR/dialogues.txt"
+    echo "2. 确保 ~/.bashrc 或 ~/.zshrc 中有:"
+    echo "   eval \"\$(starship init bash)\""
+    echo ""
+    echo "3. 重启终端或执行: source ~/.bashrc"
+    echo ""
+    echo "宠物命令:"
+    echo "  pet show     - 显示宠物"
+    echo "  pet hide     - 隐藏宠物"
+    echo "  pet toggle   - 切换显示状态"
+    echo "  pet status   - 查看状态"
+    echo "  pet love     - 增加好感度"
+    echo "  pet reset    - 重置好感度"
+    echo ""
 }
 
-# 卸载函数 (供参考)
 uninstall_pet() {
     echo "开始卸载 Termux Pet..."
-    
-    # 移除目标目录
+
     rm -rf "$TARGET_DIR"
-    
-    # 从 .bashrc 移除配置
+
     sed -i '/PET_DIR=/d' "$HOME/.bashrc"
-    sed -i '/source.*termux-pet.*pet.sh/d' "$HOME/.bashrc"
-    
-    # 从 .zshrc 移除配置
+    sed -i '/source.*termux-pet.*pet_state.sh/d' "$HOME/.bashrc"
+
     if [ -f "$HOME/.zshrc" ]; then
         sed -i '/PET_DIR=/d' "$HOME/.zshrc"
-        sed -i '/source.*termux-pet.*pet.sh/d' "$HOME/.zshrc"
+        sed -i '/source.*termux-pet.*pet_state.sh/d' "$HOME/.zshrc"
     fi
-    
+
+    if [ -f "$HOME/.config/starship.toml" ]; then
+        sed -i '/\[\[ Petshow \]\]/d' "$HOME/.config/starship.toml"
+        sed -i '/command = "~\/.termux-pet\/pet_prompt.sh"/d' "$HOME/.config/starship.toml"
+        sed -i '/when = "test -f ~\/.termux-pet\/pet_state.sh"/d' "$HOME/.config/starship.toml"
+        sed -i '/format = "\[ \$output \](\$style)"/d' "$HOME/.config/starship.toml"
+        sed -i '/style = "bold green"/d' "$HOME/.config/starship.toml"
+    fi
+
     echo "卸载完成！"
 }
 
-# 显示帮助
 show_help() {
-    echo "Termux Pet 安装脚本"
+    echo "Termux Pet (Starship版) 安装脚本"
     echo ""
     echo "使用方法:"
     echo "  $0 install   - 安装宠物系统"
@@ -78,18 +112,9 @@ show_help() {
     echo "  $0 help      - 显示此帮助"
 }
 
-# 解析参数
 case "$1" in
-    "install")
-        install_pet
-        ;;
-    "uninstall")
-        uninstall_pet
-        ;;
-    "help")
-        show_help
-        ;;
-    *)
-        show_help
-        ;;
+    install) install_pet ;;
+    uninstall) uninstall_pet ;;
+    help) show_help ;;
+    *) show_help ;;
 esac

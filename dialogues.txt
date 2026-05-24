@@ -1,25 +1,46 @@
-你好呀！今天也要元气满满哦~
-主人，你今天看起来心情不错！
-今天想做些什么呢？
-加油！你可以的！
-休息一下吧，别太累了~
-主人，我陪你一起学习！
-今天天气真好呀~
-记得喝水哦！
-努力的人运气不会太差！
-你真棒！继续保持！
-想聊聊天吗？
-有什么需要帮助的吗？
-今天也要好好吃饭哦！
-主人最棒了！
-要记得微笑哦~
-慢慢来，不着急~
-你认真的样子真好看！
-每天进步一点点就好~
-有我陪着你呢！
-今天也是爱你的一天！
-工作再忙也要注意休息呀~
-你已经很棒了！
-明天会更好的！
-保持好心情最重要！
-我会一直在这里等你~
+[mood=happy]Nice work!
+[mood=happy]Great job!
+[mood=happy]You're awesome!
+[mood=happy]Keep it up!
+[mood=happy]Perfect execution!
+[mood=happy]Good luck today~
+[mood=happy]Looking good!
+[mood=happy]That's it!
+
+[mood=normal]Done~
+[mood=normal]OK, got it
+[mood=normal]Not bad~
+[mood=normal]Yep yep
+[mood=normal]No problem~
+[mood=normal]That's fine
+[mood=normal]Alright then
+[mood=normal]Understood
+
+[mood=sad]It's okay to fail...
+[mood=sad]Don't give up, try again
+[mood=sad]What went wrong?
+[mood=sad]Check it again?
+[mood=sad]Aw...
+[mood=sad]What's wrong...
+[mood=sad]Need any help?
+[mood=sad]Don't be discouraged
+
+[mood=sleeping]zzZ...
+[mood=sleeping]Zzz~ sweet dreams
+[mood=sleeping]Let me sleep...
+[mood=sleeping]So sleepy...
+[mood=sleeping]Shh... quiet...
+[mood=sleeping]...zzz
+
+[mood=eating]Yummy~
+[mood=eating]Wanna eat together?
+[mood=eating]So hungry...
+[mood=eating]Want some food~
+[mood=eating]Mmm~ nice
+
+[mood=working]Working hard~
+[mood=working]Keep going!
+[mood=working]Focus mode ON
+[mood=working]Stay focused!
+[mood=working]Let's go!
+[mood=working]Onwards!

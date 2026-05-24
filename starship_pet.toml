@@ -1,0 +1,6 @@
+[custom.petshow]
+command = "~/.termux-pet/pet_prompt.sh"
+when = "test -f ~/.termux-pet/pet_state.sh"
+format = "[ $output ]"
+style = "bold green"
+scan_timeout = 10

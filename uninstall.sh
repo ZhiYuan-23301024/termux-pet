@@ -1,33 +1,27 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Termux Pet 卸载脚本
-
-# 目标目录
 TARGET_DIR="$HOME/.termux-pet"
 
-echo "开始卸载 Termux Pet..."
+echo "开始卸载 Termux Pet (Starship版)..."
 
-# 移除目标目录
-if [ -d "$TARGET_DIR" ]; then
-    rm -rf "$TARGET_DIR"
-    echo "已删除: $TARGET_DIR"
-fi
+rm -rf "$TARGET_DIR"
 
-# 从 .bashrc 移除配置
-if [ -f "$HOME/.bashrc" ]; then
-    sed -i '/PET_DIR=/d' "$HOME/.bashrc"
-    sed -i '/source.*termux-pet.*pet.sh/d' "$HOME/.bashrc"
-    echo "已清理 .bashrc"
-fi
+sed -i '/PET_DIR=/d' "$HOME/.bashrc"
+sed -i '/source.*termux-pet.*pet_state.sh/d' "$HOME/.bashrc"
 
-# 从 .zshrc 移除配置
 if [ -f "$HOME/.zshrc" ]; then
     sed -i '/PET_DIR=/d' "$HOME/.zshrc"
-    sed -i '/source.*termux-pet.*pet.sh/d' "$HOME/.zshrc"
-    echo "已清理 .zshrc"
+    sed -i '/source.*termux-pet.*pet_state.sh/d' "$HOME/.zshrc"
 fi
 
-# 移除残留文件（如果目录删除失败）
+if [ -f "$HOME/.config/starship.toml" ]; then
+    sed -i '/\[custom.petshow\]/d' "$HOME/.config/starship.toml"
+    sed -i '/command = "~\/.termux-pet\/pet_prompt.sh"/d' "$HOME/.config/starship.toml"
+    sed -i '/when = "test -f ~\/.termux-pet\/pet_state.sh"/d' "$HOME/.config/starship.toml"
+    sed -i '/format = "\[ \$output \]"/d' "$HOME/.config/starship.toml"
+    sed -i '/style = "bold green"/d' "$HOME/.config/starship.toml"
+fi
+
 rm -rf "$TARGET_DIR"
 
 echo ""
