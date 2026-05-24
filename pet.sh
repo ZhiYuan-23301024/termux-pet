@@ -243,6 +243,10 @@ if [ "$1" = "init" ]; then
     # 设置命令别名
     alias "$SHOW_COMMAND"='pet_command show'
     alias "$HIDE_COMMAND"='pet_command hide'
+    alias 'pettoggle'='pet_command toggle'
+    alias 'petstatus'='pet_command status'
+    alias 'petlove'='pet_command love'
+    alias 'petreset'='pet_command reset'
     
     # 设置PROMPT_COMMAND钩子
     if [ -n "$PROMPT_COMMAND" ]; then
@@ -266,13 +270,12 @@ else
     echo "Termux Pet - 终端宠物交互系统"
     echo ""
     echo "使用方法:"
-    echo "  pet.sh init          - 初始化宠物系统"
-    echo "  pet.sh show          - 显示宠物"
-    echo "  pet.sh hide          - 隐藏宠物"
-    echo "  pet.sh toggle        - 切换显示状态"
-    echo "  pet.sh status        - 查看状态"
-    echo "  pet.sh love          - 手动增加好感度"
-    echo "  pet.sh reset         - 重置好感度"
+    echo "  petshow           - 显示宠物"
+    echo "  pethide           - 隐藏宠物"
+    echo "  pettoggle         - 切换显示状态"
+    echo "  petstatus         - 查看状态"
+    echo "  petlove           - 手动增加好感度"
+    echo "  petreset          - 重置好感度"
     echo ""
     echo "配置文件: $PET_DIR/pet.conf"
     echo "对话文件: $PET_DIR/dialogues.txt"

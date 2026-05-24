@@ -23,12 +23,12 @@ Termux Pet 是一个基于 Termux 环境的终端宠物交互系统，具有以�
 
 三、基本命令
 -----------
-pet show       - 显示宠物和好感度
-pet hide       - 隐藏宠物
-pet toggle     - 切换显示状态
-pet status     - 查看当前状态
-pet love       - 手动增加好感度
-pet reset      - 重置好感度为0
+petshow        - 显示宠物和好感度
+pethide        - 隐藏宠物
+pettoggle      - 切换显示状态
+petstatus      - 查看当前状态
+petlove        - 手动增加好感度
+petreset       - 重置好感度为0
 
 四、好感度系统
 -------------
@@ -36,14 +36,14 @@ pet reset      - 重置好感度为0
 - 上限值：100
 - 每次命令执行后自动+1
 - 达到上限后不再增加
-- 使用 'pet love' 可手动增加
+- 使用 'petlove' 可手动增加
 
 五、配置自定义
 -------------
 配置文件位置：~/.termux-pet/pet.conf
 可修改项：
-- SHOW_COMMAND: 显示命令（默认: pet show）
-- HIDE_COMMAND: 隐藏命令（默认: pet hide）
+- SHOW_COMMAND: 显示命令（默认: petshow）
+- HIDE_COMMAND: 隐藏命令（默认: pethide）
 - PET_NAME: 宠物名称（默认: 小宠物）
 - FAVORITE_MAX: 好感度上限（默认: 100）
 - FAVORITE_INCREMENT: 每次增加量（默认: 1）
