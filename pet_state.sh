@@ -211,12 +211,12 @@ case "$1" in
     state) read_state ;;
     art) get_pet_art "$(get_mood)" ;;
     *)
-        echo "Pet命令用法:"
-        echo "  pet show     - 显示宠物"
-        echo "  pet hide     - 隐藏宠物"
-        echo "  pet toggle   - 切换显示状态"
-        echo "  pet status   - 查看状态"
-        echo "  pet mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)"
-        echo "  pet dialogue - 随机对话"
+        echo "Pets命令用法:"
+        echo "  pets show     - 显示宠物"
+        echo "  pets hide     - 隐藏宠物"
+        echo "  pets toggle   - 切换显示状态"
+        echo "  pets status   - 查看状态"
+        echo "  pets mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)"
+        echo "  pets dialogue - 随机对话"
         ;;
 esac

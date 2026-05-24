@@ -31,12 +31,12 @@ Termux Pet 是一个基于 Starship 的终端宠物系统，具有以下特点�
 
 四、基本命令
 -----------
-pet show     - 显示宠物
-pet hide     - 隐藏宠物
-pet toggle   - 切换显示状态
-pet status   - 查看当前状态
-pet mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)
-pet dialogue - 随机对话
+pets show     - 显示宠物
+pets hide     - 隐藏宠物
+pets toggle   - 切换显示状态
+pets status   - 查看当前状态
+pets mood     - 设置心情 (happy/normal/sad/sleeping/eating/working)
+pets dialogue - 随机对话
 
 五、心情系统
 -------------
@@ -58,9 +58,9 @@ pet dialogue - 随机对话
 
 示例效果：
 ```
-[ (^▽^) 干得漂亮！ ] user@host ~/path $
-[ (´・ω・`) 别灰心哦... ] user@host ~/path $
-[ (-ω-)zzZ ...zzz ] user@host ~/path $
+[ (^▽^) Nice work! ] user@host ~/path $
+[ (´・ω・\`) Don't give up... ] user@host ~/path $
+[ (-ω-)zzZ Zzz~ sweet dreams ] user@host ~/path $
 ```
 
 对话根据当前心情从语料库中随机选取。
@@ -81,9 +81,9 @@ pet dialogue - 随机对话
 -------------
 对话存储在 dialogues.txt，格式：
 ```
-[mood=happy]干得漂亮！
-[mood=happy]太棒了！
-[mood=sad]别灰心，再试试
+[mood=happy]Nice work!
+[mood=happy]Great job!
+[mood=sad]Don't give up, try again
 ...
 ```
 

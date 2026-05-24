@@ -70,12 +70,12 @@ install_pet() {
     echo "3. 重启终端或执行: source ~/.bashrc"
     echo ""
     echo "宠物命令:"
-    echo "  pet show     - 显示宠物"
-    echo "  pet hide     - 隐藏宠物"
-    echo "  pet toggle   - 切换显示状态"
-    echo "  pet status   - 查看状态"
-    echo "  pet love     - 增加好感度"
-    echo "  pet reset    - 重置好感度"
+    echo "  pets show     - 显示宠物"
+    echo "  pets hide     - 隐藏宠物"
+    echo "  pets toggle   - 切换显示状态"
+    echo "  pets status   - 查看状态"
+    echo "  pets mood     - 设置心情"
+    echo "  pets dialogue - 随机对话"
     echo ""
 }
 
