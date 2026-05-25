@@ -21,12 +21,16 @@ install_pet() {
 
     PET_CONFIG_LINE="export PET_DIR=\"$TARGET_DIR\""
     ALIAS_LINE="source \"$TARGET_DIR/pet_state.sh\""
+    PETS_ALIAS="alias pets='bash $TARGET_DIR/pet_state.sh'"
 
     if ! grep -q "$PET_CONFIG_LINE" "$HOME/.bashrc" 2>/dev/null; then
         echo "$PET_CONFIG_LINE" >> "$HOME/.bashrc"
     fi
     if ! grep -q "$ALIAS_LINE" "$HOME/.bashrc" 2>/dev/null; then
         echo "$ALIAS_LINE" >> "$HOME/.bashrc"
+    fi
+    if ! grep -q "$PETS_ALIAS" "$HOME/.bashrc" 2>/dev/null; then
+        echo "$PETS_ALIAS" >> "$HOME/.bashrc"
     fi
 
     if [ -f "$HOME/.zshrc" ]; then
@@ -35,6 +39,9 @@ install_pet() {
         fi
         if ! grep -q "$ALIAS_LINE" "$HOME/.zshrc" 2>/dev/null; then
             echo "$ALIAS_LINE" >> "$HOME/.zshrc"
+        fi
+        if ! grep -q "$PETS_ALIAS" "$HOME/.zshrc" 2>/dev/null; then
+            echo "$PETS_ALIAS" >> "$HOME/.zshrc"
         fi
     fi
 

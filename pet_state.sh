@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -8,7 +8,9 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-PET_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+if [ -z "$PET_DIR" ]; then
+    PET_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+fi
 
 if [ -f "$PET_DIR/pet.conf" ]; then
     source "$PET_DIR/pet.conf"
